@@ -9,7 +9,7 @@ import "OpenZeppelin/openzeppelin-contracts@4.3.0/contracts/access/Ownable.sol";
 // Redeemer
 // *********************************
 
-contract Redemer is Ownable {
+contract Redeemer is Ownable {
 
     // the token to be launched
     address public launchToken;
@@ -26,9 +26,10 @@ contract Redemer is Ownable {
     event Redeem(address investor, uint256 amount);
     event RedeemEnabled(bool enabled, uint256 time);
 
-    constructor(address _cert_address){
+    constructor(address _cert_address, address _launchToken){
         redeemEnabled = false;
         cert = Cert(_cert_address);
+        launchToken = _launchToken;
     }
 
     // redeem all tokens
@@ -55,12 +56,7 @@ contract Redemer is Ownable {
     }
 
     // -- admin functions --
-
-    // define the launch token to be redeemed
-    function setLaunchToken(address _launchToken) public onlyOwner {
-        launchToken = _launchToken;
-    }
-
+    
     function depositLaunchtoken(uint256 amount) public onlyOwner {
         require(
             ERC20(launchToken).transferFrom(msg.sender, address(this), amount),

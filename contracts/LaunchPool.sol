@@ -21,7 +21,7 @@ contract LaunchPool is Ownable {
     // the certificate
     Cert public cert;
     // fixed single price
-    uint256 public price = 80;
+    uint256 public price;
     // ratio quote in 100
     uint256 public priceQuote = 100;
     // maximum cap
@@ -64,6 +64,7 @@ contract LaunchPool is Ownable {
     
     constructor(
         address _investToken,
+        uint256 _price,
         uint256 _startTime,  
         uint256 _duration,  
         uint256 _totalraiseCap,
@@ -71,6 +72,7 @@ contract LaunchPool is Ownable {
         address _treasury        
     ) {
         investToken = _investToken;
+        price = _price;
         startTime = _startTime;
         duration = _duration;
         totalraiseCap = _totalraiseCap;
@@ -129,7 +131,7 @@ contract LaunchPool is Ownable {
             "transfer failed"
         );
         
-        uint256 issueAmount = investAmount * priceQuote / (price * 10 ** launchDecimals);
+        uint256 issueAmount = investAmount * priceQuote / price;
 
         cert.issue(msg.sender, issueAmount);
 

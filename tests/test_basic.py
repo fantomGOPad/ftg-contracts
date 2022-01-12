@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 import brownie
+from brownie import Cert
 
-
-def test_basic(launch, token, accounts):
+def test_launch(launch, token, launchtoken, redeemer, accounts):
     assert launch.address != 0
     
     assert launch.numInvested() == 0
@@ -35,3 +35,9 @@ def test_basic(launch, token, accounts):
         launch.invest(100 * f, {"from": accounts[0]})
 
     assert launch.investorInfoMap(accounts[1])[0] == 100 * f
+
+    assert token.balanceOf(launch.address) == 100 * f
+    cert = Cert.at(launch.cert())
+    assert cert.issuedSupply() == 100 * f
+
+

@@ -2,7 +2,7 @@
 
 import pytest
 from brownie import chain
-from brownie import MockToken, LaunchPool
+from brownie import MockToken, LaunchPool, Redeemer
 
 @pytest.fixture(scope="function", autouse=True)
 def isolate(fn_isolation):
@@ -16,10 +16,19 @@ def token(MockToken, accounts):
     #return MockToken.deploy("Test Token", "TST", 18, 1e21, {'from': accounts[0]})
     return MockToken.deploy({'from': accounts[0]})
 
+@pytest.fixture(scope="module")
+def launchtoken(MockToken, accounts):
+    #return MockToken.deploy("Test Token", "TST", 18, 1e21, {'from': accounts[0]})
+    return MockToken.deploy({'from': accounts[0]})
+
 
 @pytest.fixture(scope="module")
 def launch(LaunchPool, token, accounts):
     start = chain.time()
     f = 10**18
     treasury = accounts[0]
-    return LaunchPool.deploy(token.address, start, 60*60*24, 100000 * f, 100 * f, treasury, {'from': accounts[0]})
+    return LaunchPool.deploy(token.address, 100, start, 60*60*24, 100000 * f, 100 * f, treasury, {'from': accounts[0]})
+
+@pytest.fixture(scope="module")
+def redeemer(Redeemer, launch, launchtoken, token, accounts):    
+    return Redeemer.deploy(launch.cert(), launchtoken.address, {'from': accounts[0]})
