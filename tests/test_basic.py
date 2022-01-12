@@ -40,4 +40,16 @@ def test_launch(launch, token, launchtoken, redeemer, accounts):
     cert = Cert.at(launch.cert())
     assert cert.issuedSupply() == 100 * f
 
+    cert.addOwner(redeemer.address, {"from": accounts[0]})
+
+    launchtoken.approve(redeemer.address, 100 * f, {"from": accounts[0]})
+    redeemer.depositLaunchtoken(100 * f, {"from": accounts[0]})
+
+    with brownie.reverts():
+        redeemer.redeem({"from": accounts[1]})
+
+    redeemer.enableRedeem({"from": accounts[0]})
+
+    redeemer.redeem({"from": accounts[1]})
+
 

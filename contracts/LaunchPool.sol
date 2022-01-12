@@ -63,7 +63,7 @@ contract LaunchPool is Ownable {
     mapping(address => InvestorInfo) public investorInfoMap;
     
     constructor(
-        address _investToken,
+        address _investToken,        
         uint256 _price,
         uint256 _startTime,  
         uint256 _duration,  
@@ -80,10 +80,15 @@ contract LaunchPool is Ownable {
         treasury = _treasury;
         require(duration < 7 days, "duration too long");
         endTime = startTime + duration;
-        cert = new Cert("aToken", launchDecimals);
+        //cert = new Cert("aToken", launchDecimals);
+        
         
         saleEnabled = false;
         //investCap = 4000 * 10 ** launchDecimals;
+    }
+
+    function setCert(address _cert) external onlyOwner {
+        cert = Cert(_cert);
     }
 
     // adds an address to the whitelist
