@@ -29,7 +29,7 @@ networks:
             mnemonic: brownie
         #brownie networks add live private host=https://127.0.0.1:8545 chainid=1337
 
-    # fuji:
+    # fuji: 
     #   host: "https://api.avax-test.network/ext/bc/C/rpc"
 
     # avax:
@@ -37,10 +37,18 @@ networks:
     #   explorer: https://api.snowtrace.io/api            
     #   #43114
       
+    #https://mainnet.infura.io/v3/1234567890abcdef
+
+    eth-ropsten:
+        host: "https://ropsten.infura.io/v3/7be9bf5fb99244f9a2f12979362e0fa1"
+        explorer: https://api-ropsten.etherscan.io/api
+        #INFURA_KEY = "066b2424ab354312844ee4c302b3fdfd"
+
     eth-mainnet:
       #gas_limit: 6721975
       #gas_price: 0
-      host: https://mainnet.infura.io/v3/$WEB3_INFURA_PROJECT_ID
+      #host: https://mainnet.infura.io/v3/$WEB3_INFURA_PROJECT_ID
+      host: https://mainnet.infura.io/v3/7be9bf5fb99244f9a2f12979362e0fa1
 
 
 compiler:
