@@ -12,12 +12,16 @@ async function main() {
   const duration = 5 * 24 * 60 * 60;
   let stakeTokenAdd = "";
   let yieldTokenAdd = "";
-  const maxYield = 100000;
-  const maxStake = 100000;
-  const maxPerStake = 1000;
-  const rewardSteps: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const stakeSteps: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const rewardQuote: number = 0;
+
+
+  const maxYield = ethers.utils.parseUnits("10", "ether");
+  const maxStake = ethers.utils.parseUnits("10", "ether");
+  const maxPerStake = ethers.utils.parseUnits("10", "ether");
+
+
+  const rewardSteps: number[] = [1, 2, 3, 4];
+  const stakeSteps: number[] = [0, 1, 2, 3, 4];
+  const rewardQuote: number = 1;
 
   console.log("nowInSec", nowInSec);
 
